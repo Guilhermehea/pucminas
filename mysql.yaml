@@ -1,0 +1,51 @@
+# mysql.yaml
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+      - name: mysql
+        image: mysql:latest
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: "yourpassword"
+        ports:
+        - containerPort: 3306
+        livenessProbe:
+          exec:
+            command:
+            - "mysql"
+            - "-uroot"
+            - "-pyourpassword"
+            - "-e"
+            - "SELECT 1"
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          exec:
+            command:
+            - "mysql"
+            - "-uroot"
+            - "-pyourpassword"
+            - "-e"
+            - "SELECT 1"
+          initialDelaySeconds: 10
+          periodSeconds: 5
+        resources:
+          limits:
+            cpu: "0.5"
+            memory: "512Mi"
+          requests:
+            cpu: "0.2"
+            memory: "256Mi"
