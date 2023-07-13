@@ -1,4 +1,4 @@
-# mysql.yaml
+a# mysql.yaml
 
 apiVersion: apps/v1
 kind: Deployment
@@ -19,7 +19,7 @@ spec:
         image: mysql:latest
         env:
         - name: MYSQL_ROOT_PASSWORD
-          value: "yourpassword"
+          value: "Senha@123456"
         ports:
         - containerPort: 3306
         livenessProbe:
